@@ -25,18 +25,6 @@ object Dependencies {
         const val compiler = "com.google.dagger:hilt-compiler:$version"
     }
 
-    object Room {
-        private const val version = "2.3.0"
-        const val ktx = "androidx.room:room-ktx:$version"
-        const val runtime = "androidx.room:room-runtime:$version"
-        const val paging = "androidx.room:room-paging:2.4.0-alpha04"
-        const val compiler = "androidx.room:room-compiler:$version"
-    }
-
-    object Navigation {
-        const val navigationCompose = "androidx.navigation:navigation-compose:2.4.0-alpha10"
-    }
-
     object Android {
         const val coreKtx = "androidx.core:core-ktx:1.6.0"
         const val appCompat = "androidx.appcompat:appcompat:1.3.1"

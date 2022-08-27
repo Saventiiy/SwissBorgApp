@@ -81,7 +81,6 @@ dependencies {
     implementation(Dependencies.Lifecycle.lifecycleKtx)
     implementation(Dependencies.Lifecycle.viewModelCompose)
     implementation(Dependencies.Lifecycle.activityCompose)
-    implementation(Dependencies.Navigation.navigationCompose)
 
     implementation(Dependencies.Kotlin.serialization)
 
@@ -89,12 +88,6 @@ dependencies {
     implementation(Dependencies.Hilt.android)
     implementation(Dependencies.Hilt.navigation)
     kapt(Dependencies.Hilt.compiler)
-
-    // Room
-    implementation(Dependencies.Room.ktx)
-    implementation(Dependencies.Room.runtime)
-    implementation(Dependencies.Room.paging)
-    kapt(Dependencies.Room.compiler)
 
     testImplementation(Dependencies.Test.jUnit)
     androidTestImplementation(Dependencies.Test.androidJUnit)
