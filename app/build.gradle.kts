@@ -84,6 +84,10 @@ dependencies {
 
     implementation(Dependencies.Kotlin.serialization)
 
+    //Retrofit
+    implementation(Dependencies.Retrofit.retrofit)
+    implementation(Dependencies.Retrofit.gsonConverter)
+
     // Hilt
     implementation(Dependencies.Hilt.android)
     implementation(Dependencies.Hilt.navigation)

@@ -18,8 +18,14 @@ object Dependencies {
         const val serialization = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2"
     }
 
+    object Retrofit {
+        private const val version = "2.9.0"
+        const val retrofit = "com.squareup.retrofit2:retrofit:$version"
+        const val gsonConverter = "com.squareup.retrofit2:converter-gson:$version"
+    }
+
     object Hilt {
-        const val version = "2.40.5"
+        private const val version = "2.40.5"
         const val android = "com.google.dagger:hilt-android:$version"
         const val navigation = "androidx.hilt:hilt-navigation-compose:1.0.0-rc01"
         const val compiler = "com.google.dagger:hilt-compiler:$version"
