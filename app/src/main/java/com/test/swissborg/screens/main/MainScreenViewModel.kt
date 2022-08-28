@@ -7,19 +7,33 @@ import com.test.swissborg.data.util.onError
 import com.test.swissborg.data.util.onSuccess
 import com.test.swissborg.domain.CurrencyUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class MainScreenViewModel @Inject constructor(private val useCase: CurrencyUseCase) : ViewModel() {
 
-    fun getList() = viewModelScope.launch {
-        useCase.getListCurrency()
-            .onSuccess {
-                Log.e("RESPONSE", it.toString())
+    private var job: Job? = null
+    fun getList() {
+        job = viewModelScope.launch {
+            while (isActive) {
+                useCase.getListCurrency()
+                    .onSuccess {
+                        Log.e("RESPONSE", it.toString())
+                    }
+                    .onError {
+                        Log.e("RESPONSE", it.toString())
+                    }
+                delay(5000)
             }
-            .onError {
-                Log.e("RESPONSE", it.toString())
-            }
+        }
+    }
+
+    fun stopListUpdates() {
+        job?.cancel()
+        job = null
     }
 }
