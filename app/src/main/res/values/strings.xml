@@ -9,4 +9,6 @@
     <string name="unauthorized_error">Unauthorized error. Please sign-in and try again.</string>
     <string name="notFound_error">404 error. Please try later.</string>
     <string name="badRequest_error">400 error. Bad request. Please try later.</string>
+    
+    <string name="refresh">Refresh</string>
 </resources>
