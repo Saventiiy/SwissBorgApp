@@ -1,6 +1,9 @@
 package com.test.swissborg.screens.main
 
 import android.util.Log
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,6 +13,7 @@ import com.test.swissborg.data.util.onSuccess
 import com.test.swissborg.domain.CurrencyUseCase
 import com.test.swissborg.screens.main.models.MainEvent
 import com.test.swissborg.screens.main.models.MainViewState
+import com.test.swissborg.screens.main.util.FilterCurrency
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -22,9 +26,11 @@ class MainScreenViewModel @Inject constructor(private val useCase: CurrencyUseCa
     EventHandler<MainEvent> {
 
     private var job: Job? = null
+    private val _filter = mutableStateOf<FilterCurrency>(FilterCurrency.Default)
     private val _mainViewState: MutableLiveData<MainViewState> =
         MutableLiveData(MainViewState.Loading)
-    var mainViewState: MutableLiveData<MainViewState> = _mainViewState
+    val filter: State<FilterCurrency> = _filter
+    val mainViewState: LiveData<MainViewState> = _mainViewState
 
     override fun obtainEvent(event: MainEvent) {
         when (val currentState = _mainViewState.value) {
@@ -51,6 +57,10 @@ class MainScreenViewModel @Inject constructor(private val useCase: CurrencyUseCa
         when (event) {
             MainEvent.EnterScreen -> fetchData()
             MainEvent.ReloadScreen -> fetchData(onReloadClick = true)
+            is MainEvent.Filter -> {
+                _filter.value = event.filter
+                fetchData()
+            }
         }
     }
 

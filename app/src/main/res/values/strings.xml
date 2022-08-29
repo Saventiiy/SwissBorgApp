@@ -11,4 +11,10 @@
     <string name="badRequest_error">400 error. Bad request. Please try later.</string>
     
     <string name="refresh">Refresh</string>
+
+    <string name="clear_filter">Clear filter</string>
+    <string name="filter_by_name_a_z">Filter by name a-z</string>
+    <string name="filter_by_name_z_a">Filter by name z_a</string>
+    <string name="filter_by_price_from_low_to_high">Filter by price from low to high</string>
+    <string name="filter_by_price_from_high_to_low">Filter by price from high to low</string>
 </resources>

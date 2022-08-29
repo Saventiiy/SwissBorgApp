@@ -5,6 +5,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.livedata.observeAsState
 import com.test.swissborg.screens.main.models.MainEvent
 import com.test.swissborg.screens.main.models.MainViewState
+import com.test.swissborg.screens.main.util.filterCurrency
 import com.test.swissborg.screens.main.views.MainViewDisplay
 import com.test.swissborg.screens.main.views.MainViewError
 import com.test.swissborg.screens.main.views.MainViewLoading
@@ -22,7 +23,12 @@ fun MainScreen(viewModel: MainScreenViewModel) {
                 )
             }
         )
-        is MainViewState.Display -> MainViewDisplay(viewState = state)
+        is MainViewState.Display -> MainViewDisplay(
+                viewState = state.copy(items = state.items.filterCurrency(viewModel.filter.value)),
+                onFilterChange = { filter ->
+                    viewModel.obtainEvent(MainEvent.Filter(filter))
+                })
+
         else -> throw NotImplementedError("Unexpected state")
     }
 

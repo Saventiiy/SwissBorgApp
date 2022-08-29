@@ -2,6 +2,7 @@ package com.test.swissborg.data.model
 
 import com.google.gson.JsonArray
 import com.google.gson.JsonNull
+import com.test.swissborg.screens.main.util.cut
 
 data class Currency(
     val symbol: String?,
@@ -25,7 +26,7 @@ fun JsonArray.toCurrency() =
     this.map {
         val size = it.asJsonArray.size()
         Currency(
-            symbol = it.asJsonArray[0].asString,
+            symbol = it.asJsonArray[0].asString.cut(),
             frr = it.asJsonArray[1].asFloat,
             bid = it.asJsonArray[2].asFloat,
             bidPeriod = it.asJsonArray[3].asInt,
