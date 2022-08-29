@@ -1,6 +1,5 @@
 package com.test.swissborg.screens.main
 
-import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
@@ -8,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.test.swissborg.base.EventHandler
+import com.test.swissborg.data.util.ApplicationError
 import com.test.swissborg.data.util.onError
 import com.test.swissborg.data.util.onSuccess
 import com.test.swissborg.domain.CurrencyUseCase
@@ -25,7 +25,7 @@ import javax.inject.Inject
 class MainScreenViewModel @Inject constructor(private val useCase: CurrencyUseCase) : ViewModel(),
     EventHandler<MainEvent> {
 
-    private var job: Job? = null
+    private var _job: Job? = null
     private val _filter = mutableStateOf<FilterCurrency>(FilterCurrency.Default)
     private val _mainViewState: MutableLiveData<MainViewState> =
         MutableLiveData(MainViewState.Loading)
@@ -43,13 +43,13 @@ class MainScreenViewModel @Inject constructor(private val useCase: CurrencyUseCa
 
     private fun reduce(event: MainEvent, currentState: MainViewState.Loading) {
         when (event) {
-            MainEvent.EnterScreen -> fetchData()
+            MainEvent.EnterScreen -> checkPlatformStatus(onReloadClick = true)
         }
     }
 
     private fun reduce(event: MainEvent, currentState: MainViewState.Error) {
         when (event) {
-            MainEvent.ReloadScreen -> fetchData(onReloadClick = true)
+            MainEvent.ReloadScreen -> checkPlatformStatus()
         }
     }
 
@@ -64,20 +64,33 @@ class MainScreenViewModel @Inject constructor(private val useCase: CurrencyUseCa
         }
     }
 
+    private fun checkPlatformStatus(onReloadClick: Boolean = false) {
+        _mainViewState.postValue(MainViewState.Loading)
+        viewModelScope.launch {
+            useCase.checkPlatformStatus()
+                .onSuccess {
+                    if (it) {
+                        _mainViewState.postValue(MainViewState.Error(ApplicationError.Server))
+                    } else {
+                        fetchData(onReloadClick)
+                    }
+                }
+                .onError { _mainViewState.postValue(MainViewState.Error(it)) }
+        }
+    }
+
     private fun fetchData(onReloadClick: Boolean = false) {
         if (onReloadClick) {
             _mainViewState.postValue(MainViewState.Loading)
         }
-        job = viewModelScope.launch {
+        _job = viewModelScope.launch {
             while (isActive) {
                 useCase.getListCurrency()
                     .onSuccess {
                         _mainViewState.postValue(MainViewState.Display(it))
-                        Log.e("RESPONSE", it.toString())
                     }
                     .onError {
                         _mainViewState.postValue(MainViewState.Error(it))
-                        Log.e("RESPONSE", it.toString())
                     }
                 delay(5000)
             }
@@ -85,7 +98,7 @@ class MainScreenViewModel @Inject constructor(private val useCase: CurrencyUseCa
     }
 
     fun stopListUpdates() {
-        job?.cancel()
-        job = null
+        _job?.cancel()
+        _job = null
     }
 }

@@ -7,5 +7,7 @@ import javax.inject.Inject
 
 class CurrencyUseCase @Inject constructor(private val repository: CurrencyRepository) {
 
+    suspend fun checkPlatformStatus(): Result<Boolean> = repository.checkPlatformStatus()
+
     suspend fun getListCurrency(): Result<List<Currency>> = repository.getListCurrency()
 }

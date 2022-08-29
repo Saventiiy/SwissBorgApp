@@ -17,17 +17,13 @@ fun MainScreen(viewModel: MainScreenViewModel) {
         is MainViewState.Loading -> MainViewLoading()
         is MainViewState.Error -> MainViewError(
             error = state.error,
-            onReloadClick = {
-                viewModel.obtainEvent(
-                    MainEvent.ReloadScreen
-                )
-            }
+            onReloadClick = { viewModel.obtainEvent(MainEvent.ReloadScreen) }
         )
         is MainViewState.Display -> MainViewDisplay(
-                viewState = state.copy(items = state.items.filterCurrency(viewModel.filter.value)),
-                onFilterChange = { filter ->
-                    viewModel.obtainEvent(MainEvent.Filter(filter))
-                })
+            viewState = state.copy(items = state.items.filterCurrency(viewModel.filter.value)),
+            onFilterChange = { filter ->
+                viewModel.obtainEvent(MainEvent.Filter(filter))
+            })
 
         else -> throw NotImplementedError("Unexpected state")
     }

@@ -10,6 +10,9 @@ import javax.inject.Inject
 class CurrencyRepository @Inject constructor(private val api: CurrencyApi) :
     CurrencyRepositoryInterface {
 
+    override suspend fun checkPlatformStatus(): Result<Boolean> =
+        safeApiCall { api.checkPlatformStatus().asBoolean }
+
     override suspend fun getListCurrency(): Result<List<Currency>> =
         safeApiCall { api.getListCurrency().toCurrency() }
 }
