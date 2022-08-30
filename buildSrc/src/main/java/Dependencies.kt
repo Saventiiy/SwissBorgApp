@@ -1,8 +1,7 @@
-
 object Dependencies {
 
     object Compose {
-        const val version = "1.1.0-beta01"
+        const val version = "1.2.0"
         const val ui = "androidx.compose.ui:ui:$version"
         const val material = "androidx.compose.material:material:$version"
         const val tooling = "androidx.compose.ui:ui-tooling-preview:$version"
@@ -25,7 +24,7 @@ object Dependencies {
     }
 
     object Hilt {
-        private const val version = "2.40.5"
+        private const val version = "2.42"
         const val android = "com.google.dagger:hilt-android:$version"
         const val navigation = "androidx.hilt:hilt-navigation-compose:1.0.0-rc01"
         const val compiler = "com.google.dagger:hilt-compiler:$version"
@@ -47,5 +46,9 @@ object Dependencies {
         const val jUnit = "junit:junit:4.+"
         const val androidJUnit = "androidx.test.ext:junit:1.1.2"
         const val espresso = "androidx.test.espresso:espresso-core:3.3.0"
+
+        private const val mockitoVersion = "4.7.0"
+        const val mockito = "org.mockito:mockito-core:$mockitoVersion"
+        const val mockitoInline = "org.mockito:mockito-inline:$mockitoVersion"
     }
 }

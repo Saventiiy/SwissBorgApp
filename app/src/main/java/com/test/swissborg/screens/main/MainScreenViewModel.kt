@@ -44,12 +44,14 @@ class MainScreenViewModel @Inject constructor(private val useCase: CurrencyUseCa
     private fun reduce(event: MainEvent, currentState: MainViewState.Loading) {
         when (event) {
             MainEvent.EnterScreen -> checkPlatformStatus(onReloadClick = true)
+            else -> {}
         }
     }
 
     private fun reduce(event: MainEvent, currentState: MainViewState.Error) {
         when (event) {
             MainEvent.ReloadScreen -> checkPlatformStatus()
+            else -> {}
         }
     }
 

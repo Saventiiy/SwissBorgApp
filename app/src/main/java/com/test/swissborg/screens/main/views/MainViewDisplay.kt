@@ -1,5 +1,6 @@
 package com.test.swissborg.screens.main.views
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -22,6 +23,7 @@ import com.test.swissborg.screens.main.models.MainViewState
 import com.test.swissborg.screens.main.util.FilterCurrency
 import com.test.swissborg.ui.theme.SwissBorgTheme
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun MainViewDisplay(
     viewState: MainViewState.Display,

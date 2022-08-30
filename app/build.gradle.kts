@@ -30,7 +30,10 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = true
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
     compileOptions {
@@ -93,10 +96,12 @@ dependencies {
     implementation(Dependencies.Hilt.navigation)
     kapt(Dependencies.Hilt.compiler)
 
+    //Test
+    testImplementation(Dependencies.Test.mockito)
+    testImplementation(Dependencies.Test.mockitoInline)
     testImplementation(Dependencies.Test.jUnit)
     androidTestImplementation(Dependencies.Test.androidJUnit)
     androidTestImplementation(Dependencies.Test.espresso)
-
     androidTestImplementation(Dependencies.Compose.uiTest)
     debugImplementation(Dependencies.Compose.toolingTest)
 }

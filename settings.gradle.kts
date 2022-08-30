@@ -7,10 +7,10 @@ pluginManagement {
     resolutionStrategy {
         eachPlugin {
             if (requested.id.id.startsWith("com.android")) {
-                useModule("com.android.tools.build:gradle:7.0.2")
+                useModule("com.android.tools.build:gradle:7.2.2")
             }
             if (requested.id.id.startsWith("org.jetbrains.kotlin")) {
-                useVersion("1.5.31")
+                useVersion("1.7.0")
             }
             if (requested.id.id.startsWith("dagger.hilt.android")) {
                 useModule("com.google.dagger:hilt-android-gradle-plugin:2.38.1")
@@ -26,4 +26,4 @@ pluginManagement {
 //    }
 //}
 rootProject.name = "SwissBorg"
-include (":app")
+include(":app")
