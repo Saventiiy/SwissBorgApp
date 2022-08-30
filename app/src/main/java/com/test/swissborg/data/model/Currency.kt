@@ -2,7 +2,8 @@ package com.test.swissborg.data.model
 
 import com.google.gson.JsonArray
 import com.google.gson.JsonNull
-import com.test.swissborg.screens.main.util.cut
+import com.test.swissborg.data.util.cut
+import com.test.swissborg.data.util.getIcon
 
 data class Currency(
     val symbol: String?,
@@ -19,7 +20,8 @@ data class Currency(
     val volume: Float?,
     val high: Float?,
     val low: Float?,
-    val frrAmountAvailable: Float?
+    val frrAmountAvailable: Float?,
+    val icon: Int
 )
 
 fun JsonArray.toCurrency() =
@@ -40,6 +42,7 @@ fun JsonArray.toCurrency() =
             volume = if (size > 11) it.asJsonArray[11].asFloat else null,
             high = if (size > 12) it.asJsonArray[12].asFloat else null,
             low = if (size > 13) it.asJsonArray[13].asFloat else null,
-            frrAmountAvailable = if (size > 14 && it.asJsonArray[14] != JsonNull.INSTANCE) it.asJsonArray[14].asFloat else null
+            frrAmountAvailable = if (size > 14 && it.asJsonArray[14] != JsonNull.INSTANCE) it.asJsonArray[14].asFloat else null,
+            icon = it.asJsonArray[0].asString.cut().getIcon()
         )
     }

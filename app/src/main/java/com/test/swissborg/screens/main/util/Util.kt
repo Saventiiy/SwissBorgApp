@@ -13,8 +13,6 @@ fun List<Currency>.filterCurrency(filter: FilterCurrency?): List<Currency> =
         else -> this
     }
 
-fun String?.cut() = this?.replace("t", "")?.replace("USD", "")?.replace(":", "")
-
 fun <T> SnapshotStateList<T>.swapList(newList: List<T>) {
     clear()
     addAll(newList)
