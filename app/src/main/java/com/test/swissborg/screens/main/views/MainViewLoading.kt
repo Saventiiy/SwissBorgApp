@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import com.test.swissborg.ui.theme.SwissBorgTheme
+import com.test.swissborg.ui.theme.Woodsmoke
 
 
 @Composable
@@ -17,7 +18,7 @@ fun MainViewLoading() {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White)
+            .background(Woodsmoke)
     ) {
         CircularProgressIndicator(
             modifier = Modifier.align(Alignment.Center),

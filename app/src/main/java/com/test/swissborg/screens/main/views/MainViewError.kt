@@ -18,6 +18,7 @@ import com.test.swissborg.R
 import com.test.swissborg.data.util.ApplicationError
 import com.test.swissborg.data.util.message
 import com.test.swissborg.ui.theme.SwissBorgTheme
+import com.test.swissborg.ui.theme.Woodsmoke
 
 @Composable
 fun MainViewError(
@@ -26,7 +27,7 @@ fun MainViewError(
 ) {
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color = Color.White
+        color = Woodsmoke
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
             Column(
@@ -38,21 +39,21 @@ fun MainViewError(
                 Icon(
                     modifier = Modifier.size(96.dp),
                     imageVector = Icons.Filled.Warning,
-                    tint = Color.DarkGray,
+                    tint = Color.Gray,
                     contentDescription = "Error loading items"
                 )
 
                 Text(
                     modifier = Modifier.padding(top = 16.dp, bottom = 24.dp),
                     text = stringResource(id = error.message()),
-                    color = Color.Black,
+                    color = Color.White,
                     textAlign = TextAlign.Center
                 )
 
                 Button(
                     onClick = onReloadClick,
                     shape = RoundedCornerShape(15.dp),
-                    colors = ButtonDefaults.buttonColors(backgroundColor = Color.Black),
+                    colors = ButtonDefaults.buttonColors(backgroundColor = Color.DarkGray),
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(50.dp)

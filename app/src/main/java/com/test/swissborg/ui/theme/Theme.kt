@@ -1,15 +1,19 @@
 package com.test.swissborg.ui.theme
 
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.LocalOverscrollConfiguration
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 
 private val DarkColorPalette = darkColors(
     primary = Purple200,
     primaryVariant = Purple700,
-    secondary = Teal200
+    secondary = Teal200,
+    background = Woodsmoke
 )
 
 private val LightColorPalette = lightColors(
@@ -27,6 +31,7 @@ private val LightColorPalette = lightColors(
     */
 )
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SwissBorgTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
     val colors = if (darkTheme) {
@@ -39,6 +44,10 @@ fun SwissBorgTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composa
         colors = colors,
         typography = Typography,
         shapes = Shapes,
-        content = content
-    )
+    ) {
+        CompositionLocalProvider(
+            LocalOverscrollConfiguration provides null,
+            content = content
+        )
+    }
 }
