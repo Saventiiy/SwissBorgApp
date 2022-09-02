@@ -6,7 +6,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -14,6 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -22,6 +25,7 @@ import com.test.swissborg.data.model.Currency
 import com.test.swissborg.screens.main.models.MainViewState
 import com.test.swissborg.screens.main.util.FilterCurrency
 import com.test.swissborg.ui.theme.Bombay
+import com.test.swissborg.ui.theme.HeavyMetal
 import com.test.swissborg.ui.theme.HippieBlue
 import com.test.swissborg.ui.theme.SwissBorgTheme
 import java.math.BigDecimal
@@ -32,8 +36,10 @@ fun MainViewDisplay(
     viewState: MainViewState.Display,
     onFilterChange: (FilterCurrency) -> Unit
 ) {
-    Scaffold(topBar = { TopBar(onFilterChange = onFilterChange) }) {
-        val items = viewState.items
+    val textState = remember { mutableStateOf(TextFieldValue("")) }
+    Scaffold(topBar = { TopBar(onFilterChange = onFilterChange, state = textState) }) {
+        val items =
+            viewState.items.filter { it.symbol!!.contains(textState.value.text, ignoreCase = true) }
         LazyColumn {
             items(items.size) { item ->
                 CurrencyCard(item = items[item])
@@ -43,10 +49,10 @@ fun MainViewDisplay(
 }
 
 @Composable
-fun TopBar(onFilterChange: (FilterCurrency) -> Unit) {
+fun TopBar(onFilterChange: (FilterCurrency) -> Unit, state: MutableState<TextFieldValue>) {
     var showMenu by remember { mutableStateOf(false) }
     TopAppBar(
-        title = { Text(text = stringResource(id = R.string.app_name)) },
+        title = { SearchView(state = state) },
         actions = {
             IconButton(onClick = { showMenu = !showMenu }) {
                 Icon(imageVector = Icons.Default.MoreVert, contentDescription = null)
@@ -139,6 +145,54 @@ fun CurrencyCard(item: Currency) {
             }
         }
     }
+}
+
+@Composable
+fun SearchView(state: MutableState<TextFieldValue>) {
+    TextField(
+        value = state.value,
+        onValueChange = { value ->
+            state.value = value
+        },
+        modifier = Modifier.fillMaxWidth(),
+        leadingIcon = {
+            Icon(
+                Icons.Default.Search,
+                contentDescription = "",
+                modifier = Modifier
+                    .padding(15.dp)
+                    .size(24.dp)
+            )
+        },
+        trailingIcon = {
+            if (state.value != TextFieldValue("")) {
+                IconButton(
+                    onClick = {
+                        state.value =
+                            TextFieldValue("")
+                    }
+                ) {
+                    Icon(
+                        Icons.Default.Close,
+                        contentDescription = "",
+                        modifier = Modifier
+                            .padding(15.dp)
+                            .size(24.dp)
+                    )
+                }
+            }
+        },
+        colors = TextFieldDefaults.textFieldColors(
+            textColor = Color.White,
+            cursorColor = Color.White,
+            leadingIconColor = Color.White,
+            trailingIconColor = Color.White,
+            backgroundColor = HeavyMetal,
+            focusedIndicatorColor = Color.Transparent,
+            unfocusedIndicatorColor = Color.Transparent,
+            disabledIndicatorColor = Color.Transparent
+        )
+    )
 }
 
 @Preview
